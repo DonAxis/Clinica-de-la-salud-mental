@@ -134,7 +134,6 @@ document.getElementById('prevBtn').addEventListener('click', () => {
 function showResults() {
   container.classList.add('hidden');
   document.getElementById('navigation').classList.add('hidden');
-
   resultContainer.classList.remove('hidden');
 
   const total = answers.reduce((sum, val) => sum + (val ?? 0), 0);
@@ -148,26 +147,37 @@ function showResults() {
     interpretacion = "Es momento de acudir con un especialista en salud mental para que te oriente sobre el mejor tratamiento para ti, porque nunca es tarde para sentirte bien.";
   }
 
-  let recomendacionesSeleccionadas = "";
-  for (let i = 0; i < answers.length; i++) {
-    if (answers[i] === 2 && recomendaciones[i]) {
-      recomendacionesSeleccionadas += `<li>${recomendaciones[i]}</li>`;
+
+  let recomendacionesHTML = "";
+  if (total > 15) {
+    let lista = "";
+
+    for (let i = 0; i < answers.length; i++) {
+      if (answers[i] === 2 && recomendaciones[i]) {
+        lista += `<li>${recomendaciones[i]}</li>`;
+      }
     }
+
+    if (!lista) {
+      lista = "<li>No hay recomendaciones específicas para tus respuestas.</li>";
+    }
+
+    recomendacionesHTML = `
+      <h3>Recomendaciones:</h3>
+      <ol>${lista}</ol>
+    `;
   }
 
-  if (!recomendacionesSeleccionadas) {
-    recomendacionesSeleccionadas = "<li>No hay recomendaciones específicas para tus respuestas.</li>";
-  }
-
-resultContainer.innerHTML = `
-  <h2>Resultado final</h2>
-  <p><strong>Suma total:</strong> ${total}</p>
-  <p><strong>Interpretación:</strong> ${interpretacion}</p>
-  <h3>Recomendaciones:</h3>
-  <ol>${recomendacionesSeleccionadas}</ol>
-  <button onclick="restart()">Reiniciar</button>
-`;
+  
+  resultContainer.innerHTML = `
+    <h2>Resultado final</h2>
+    <p><strong>Suma total:</strong> ${total}</p>
+    <p><strong>Interpretación:</strong> ${interpretacion}</p>
+    ${recomendacionesHTML}
+    <button onclick="restart()">Reiniciar</button>
+  `;
 }
+
 
 function restart() {
   answers.fill(null);
