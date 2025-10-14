@@ -66,92 +66,74 @@
       "Pequeñas Afirmaciones: Practica expresar tu opinión o sentimiento en el momento en el que sucede. No esperes a que la emoción se acumule. Empieza con algo breve: 'No, gracias' o 'Prefiero hacer X'."
     ];
 
-    // Preguntas especiales para valores (no usamos para la recomendación, sólo para los botones)
-    const valueMap = {
-      9: [0, 1, 2],
-      12: [0, 1, 2],
-      26: [0, 1, 2]
+   // Preguntas especiales para valores (no usamos para la recomendación, sólo para los botones)
+const valueMap = {
+  9: [0, 1, 2],
+  12: [0, 1, 2],
+  26: [0, 1, 2]
+};
+
+// Mezclar preguntas aleatoriamente
+let questionIndices = questions.map((_, i) => i).sort(() => Math.random() - 0.5);
+let currentQuestion = 0;
+const answers = Array(questions.length).fill(null);
+
+const container = document.getElementById('question-container');
+const resultContainer = document.getElementById('result-container');
+
+function renderQuestion(index) {
+  const questionIndex = questionIndices[index];
+  const question = questions[questionIndex];
+  const values = valueMap[questionIndex] || [0, 1, 2];
+
+  container.innerHTML = `
+    <div class="question">${index + 1}. ${question}</div>
+    <div class="options">
+      <button data-value="${values[0]}" ${answers[questionIndex] === values[0] ? 'class="selected"' : ''}>0</button>
+      <button data-value="${values[1]}" ${answers[questionIndex] === values[1] ? 'class="selected"' : ''}>1</button>
+      <button data-value="${values[2]}" ${answers[questionIndex] === values[2] ? 'class="selected"' : ''}>2</button>
+    </div>
+  `;
+
+  // Eventos para los botones
+  const optionButtons = container.querySelectorAll('.options button');
+  optionButtons.forEach(btn => {
+    btn.onclick = () => {
+      answers[questionIndex] = parseInt(btn.dataset.value);
+      optionButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      setTimeout(() => {
+        nextQuestion();
+      }, 300);
     };
+  });
 
-    // Mezclar preguntas aleatoriamente
-    let questionIndices = questions.map((_, i) => i).sort(() => Math.random() - 0.5);
-    let currentQuestion = 0;
-    const answers = Array(questions.length).fill(null);
+  // Botón Anterior
+  const prevBtn = document.getElementById('prevBtn');
+  prevBtn.disabled = index === 0;
+  prevBtn.style.visibility = 'visible';
+}
 
-    const container = document.getElementById('question-container');
-    const resultContainer = document.getElementById('result-container');
+function nextQuestion() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    renderQuestion(currentQuestion);
+  } else {
+    showResults();
+  }
+}
 
-    function renderQuestion(index) {
-      const questionIndex = questionIndices[index];
-      const question = questions[questionIndex];
-      const values = valueMap[questionIndex] || [0, 1, 2];
-
-      container.innerHTML = `
-        <div class="question">${index + 1}. ${question}</div>
-        <div class="options">
-          <button data-value="${values[0]}" ${answers[questionIndex] === values[0] ? 'class="selected"' : ''}>0</button>
-          <button data-value="${values[1]}" ${answers[questionIndex] === values[1] ? 'class="selected"' : ''}>1</button>
-          <button data-value="${values[2]}" ${answers[questionIndex] === values[2] ? 'class="selected"' : ''}>2</button>
-        </div>
-      `;
-
-      // Eventos para los botones
-      const optionButtons = container.querySelectorAll('.options button');
-      optionButtons.forEach(btn => {
-        btn.onclick = () => {
-          answers[questionIndex] = parseInt(btn.dataset.value);
-          optionButtons.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-        };
-      });
-
-      // Botones de navegación
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-
-      prevBtn.disabled = index === 0;
-      prevBtn.style.visibility = 'visible';
-      nextBtn.textContent = index === questions.length - 1 ? 'Terminar' : 'Siguiente';
-    }
-
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
-      if (currentQuestion > 0) {
-        currentQuestion--;
-        renderQuestion(currentQuestion);
-      }
-    });
-
-    document.getElementById('nextBtn').addEventListener('click', () => {
-      const questionIndex = questionIndices[currentQuestion];
-      if (answers[questionIndex] === null) {
-        alert("Por favor selecciona una opción antes de continuar.");
-        return;
-      }
-
-      // Eliminamos el alert individual de recomendaciones aquí
-      /*
-      const values = valueMap[questionIndex] || [0, 1, 2];
-      if (answers[questionIndex] === values[2] && recomendaciones[questionIndex]) {
-        alert(`💡 Recomendación:\n${recomendaciones[questionIndex]}`);
-      }
-      */
-
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        renderQuestion(currentQuestion);
-      } else {
-        showResults();
-      }
-    });
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion(currentQuestion);
+  }
+});
 
 function showResults() {
   container.classList.add('hidden');
   document.getElementById('navigation').classList.add('hidden');
-
-  // Deshabilitar botones para asegurar que no se usen más
-  document.getElementById('prevBtn').disabled = true;
-  document.getElementById('nextBtn').disabled = true;
 
   resultContainer.classList.remove('hidden');
 
@@ -177,27 +159,25 @@ function showResults() {
     recomendacionesSeleccionadas = "<li>No hay recomendaciones específicas para tus respuestas.</li>";
   }
 
-  resultContainer.innerHTML = `
-    <h2>Resultado final</h2>
-    <p><strong>Suma total:</strong> ${total}</p>
-    <p><strong>Interpretación:</strong> ${interpretacion}</p>
-    <h3>Recomendaciones:</h3>
-    <ul>${recomendacionesSeleccionadas}</ul>
-    <button onclick="restart()">Reiniciar</button>
-  `;
+resultContainer.innerHTML = `
+  <h2>Resultado final</h2>
+  <p><strong>Suma total:</strong> ${total}</p>
+  <p><strong>Interpretación:</strong> ${interpretacion}</p>
+  <h3>Recomendaciones:</h3>
+  <ol>${recomendacionesSeleccionadas}</ol>
+  <button onclick="restart()">Reiniciar</button>
+`;
 }
 
+function restart() {
+  answers.fill(null);
+  questionIndices = questions.map((_, i) => i).sort(() => Math.random() - 0.5);
+  currentQuestion = 0;
+  resultContainer.classList.add('hidden');
+  container.classList.remove('hidden');
+  document.getElementById('navigation').classList.remove('hidden');
+  renderQuestion(currentQuestion);
+}
 
-    function restart() {
-      // Reiniciar todo para volver a empezar
-      answers.fill(null);
-      questionIndices = questions.map((_, i) => i).sort(() => Math.random() - 0.5);
-      currentQuestion = 0;
-      resultContainer.classList.add('hidden');
-      container.classList.remove('hidden');
-      document.getElementById('navigation').classList.remove('hidden');
-      renderQuestion(currentQuestion);
-    }
-
-    // Renderizar la primera pregunta al cargar la página
-    renderQuestion(currentQuestion);
+// Renderizar la primera pregunta al cargar la página
+renderQuestion(currentQuestion);
