@@ -136,6 +136,9 @@ function showResults() {
   document.getElementById('navigation').classList.add('hidden');
   resultContainer.classList.remove('hidden');
 
+  // Desactivar botón de "Anterior"
+  document.getElementById('prevBtn').disabled = true;
+
   const total = answers.reduce((sum, val) => sum + (val ?? 0), 0);
   let interpretacion = "";
 
@@ -147,17 +150,14 @@ function showResults() {
     interpretacion = "Es momento de acudir con un especialista en salud mental para que te oriente sobre el mejor tratamiento para ti, porque nunca es tarde para sentirte bien.";
   }
 
-
   let recomendacionesHTML = "";
   if (total > 15) {
     let lista = "";
-
     for (let i = 0; i < answers.length; i++) {
       if (answers[i] === 2 && recomendaciones[i]) {
         lista += `<li>${recomendaciones[i]}</li>`;
       }
     }
-
     if (!lista) {
       lista = "<li>No hay recomendaciones específicas para tus respuestas.</li>";
     }
@@ -168,7 +168,6 @@ function showResults() {
     `;
   }
 
-  
   resultContainer.innerHTML = `
     <h2>Resultado final</h2>
     <p><strong>Suma total:</strong> ${total}</p>
@@ -177,6 +176,7 @@ function showResults() {
     <button onclick="restart()">Reiniciar</button>
   `;
 }
+
 
 
 function restart() {
