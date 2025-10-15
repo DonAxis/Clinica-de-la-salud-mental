@@ -68,9 +68,9 @@
 
    // Preguntas especiales para valores (no usamos para la recomendación, sólo para los botones)
 const valueMap = {
-  9: [0, 1, 2],
-  12: [0, 1, 2],
-  26: [0, 1, 2]
+  9: [0, 15, 28],
+  12: [0, 14, 27],
+  26: [0, 14, 27]
 };
 
 // Mezclar preguntas aleatoriamente
@@ -154,7 +154,8 @@ function showResults() {
   if (total > 15) {
     let lista = "";
     for (let i = 0; i < answers.length; i++) {
-      if (answers[i] === 2 && recomendaciones[i]) {
+      if ((answers[i] === 1 || answers[i] === 2) && recomendaciones[i]) {
+      //if (answers[i] === 2 && recomendaciones[i]) {
         lista += `<li>${recomendaciones[i]}</li>`;
       }
     }
@@ -191,3 +192,4 @@ function restart() {
 
 // Renderizar la primera pregunta al cargar la página
 renderQuestion(currentQuestion);
+
