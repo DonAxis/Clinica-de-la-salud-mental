@@ -154,8 +154,8 @@ function showResults() {
   if (total > 15) {
     let lista = "";
     for (let i = 0; i < answers.length; i++) {
-      if ((answers[i] === 1 || answers[i] === 2) && recomendaciones[i]) {
-      //if (answers[i] === 2 && recomendaciones[i]) {
+     // if ((answers[i] === 1 || answers[i] === 2) && recomendaciones[i]) {
+      if (answers[i] === 2 && recomendaciones[i]) {
         lista += `<li>${recomendaciones[i]}</li>`;
       }
     }
@@ -192,4 +192,5 @@ function restart() {
 
 // Renderizar la primera pregunta al cargar la página
 renderQuestion(currentQuestion);
+
 
