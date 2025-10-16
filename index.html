@@ -1,28 +1,78 @@
-  <!DOCTYPE html>
-  <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deseómetro</title>
-    <link rel="stylesheet" href="1.css">
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deseómetro</title>
+
+  <!-- Tus estilos -->
+  <link rel="stylesheet" href="1.css">
+  <link rel="stylesheet" href="saludo.css">
+</head>
+<body>
+
+  <!-- Splash: mensaje inicial -->
+  <div id="splash">
+    <div>
+      <strong>DESEÓMETRO</strong><br>
+      Elaborado por Clínica de la ansiedad y salud mental (CLIANS)
+    </div>
+  </div>
+
+  <!-- Modal informativo -->
+  <div id="intro-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Deseómetro</h2>
+      <p>
+        Es un instrumento breve y sencillo, que te ayudará a saber, mediante la indagación de tus deseos de mejorar en ciertos aspectos de tu vida, qué tan necesario es que busques un tratamiento especializado para atender tu salud mental.
+      </p>
+
+      <h3>Instrucciones</h3>
+      <p>
+        Se presentarán una sucesión de 30 enunciados en los que deberás puntuar la intensidad de tus deseos, donde:
+      </p>
+      <ul>
+        <li>0 = sin intensidad</li>
+        <li>1 = mediana intensidad</li>
+        <li>2 = máxima intensidad</li>
+      </ul>
+
+      <h3>Calificación y recomendaciones</h3>
+      <p>
+        Al terminar de responder, se te dará una interpretación de tus resultados que te ayudarán a tomar una decisión respecto a cómo hacerte cargo de tu salud mental, presentándose uno de estos tres resultados:
+      </p>
+      <ul>
+        <li>“Al parecer todo va bien, pero si lo crees necesario, podrías recibir orientación por un especialista en salud mental”.</li>
+        <li>“No sería una mala idea que consultes a un especialista en salud mental para que evalúe qué tan necesario es recibir un tratamiento clínico”.</li>
+        <li>“Es momento de acudir con un especialista en salud mental para que te oriente sobre el mejor tratamiento para ti porque nunca es tarde para sentirte bien”.</li>
+      </ul>
+
+      <p>
+        Al final, se enlistarán una serie de recomendaciones que, por mientras, te ayudarán a trabajar sobre ciertos aspectos que podrían estar afectando tu salud mental.
+      </p>
+
+      <button id="start-btn">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- Contenido real del sitio -->
+  <div id="main-content">
     <div class="logo-container">
       <img src="clinicaLogo.png" alt="Logo de la clínica">
     </div>
-    
+
     <div class="container">
       <h1>Deseómetro</h1>
       <div id="question-container"></div>
       <div id="navigation">
         <button id="prevBtn">Anterior</button>
-    
       </div>
       <div id="result-container" class="hidden"></div>
     </div>
-    <script src="1.js"></script>
-  </body>
-  </html>
+  </div>
 
-
-
+  <!-- Scripts -->
+  <script src="1.js"></script>
+  <script src="saludo.js"></script>
+</body>
+</html>
