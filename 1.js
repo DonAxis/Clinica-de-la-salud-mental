@@ -184,7 +184,7 @@ function showResults() {
     ${recomendacionesHTML}
     <p style="margin-top: 30px;">
       Si así lo desearas, <strong><a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" style="color: #25D366; font-weight: bold;">presiona este texto</a></strong> para recibir información sobre nuestros servicios o agendar cita con alguno de nuestros especialistas en salud mental:<br>
-      <a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" style="color: #25D366; font-weight: bold;">
+      <a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20mas%20información" target="_blank" style="color: #25D366; font-weight: bold;">
         +52 56 3604 6040
       </a>
     </p>
@@ -205,4 +205,5 @@ function restart() {
 
 // Renderizar la primera pregunta al cargar la página
 renderQuestion(currentQuestion);
+
 
