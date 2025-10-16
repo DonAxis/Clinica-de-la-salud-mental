@@ -1,4 +1,4 @@
-   // Preguntas
+// Preguntas
     const questions = [
       "Desearía dejar de enojarme tan fácilmente.",
       "Desearía perder el miedo a ciertas cosas o situaciones.",
@@ -150,15 +150,23 @@ function showResults() {
     interpretacion = "Es momento de acudir con un especialista en salud mental para que te oriente sobre el mejor tratamiento para ti, porque nunca es tarde para sentirte bien.";
   }
 
+  // Mostrar recomendaciones si hay respuestas relevantes
   let recomendacionesHTML = "";
   if (total > 15) {
     let lista = "";
+
     for (let i = 0; i < answers.length; i++) {
-     // if ((answers[i] === 1 || answers[i] === 2) && recomendaciones[i]) {
-      if (answers[i] === 2 && recomendaciones[i]) {
+      const respuesta = answers[i];
+      const esEspecial = i === 9 || i === 12 || i === 26;
+
+      if (
+        (esEspecial && (respuesta === 1 || respuesta === 2) && recomendaciones[i]) ||
+        (!esEspecial && respuesta === 2 && recomendaciones[i])
+      ) {
         lista += `<li>${recomendaciones[i]}</li>`;
       }
     }
+
     if (!lista) {
       lista = "<li>No hay recomendaciones específicas para tus respuestas.</li>";
     }
@@ -174,10 +182,15 @@ function showResults() {
     <p><strong>Suma total:</strong> ${total}</p>
     <p><strong>Interpretación:</strong> ${interpretacion}</p>
     ${recomendacionesHTML}
+    <p style="margin-top: 30px;">
+      Si así lo desearas, <strong><a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" style="color: #25D366; font-weight: bold;">presiona este texto</a></strong> para recibir información sobre nuestros servicios o agendar cita con alguno de nuestros especialistas en salud mental:<br>
+      <a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" style="color: #25D366; font-weight: bold;">
+        +52 56 3604 6040
+      </a>
+    </p>
     <button onclick="restart()">Reiniciar</button>
   `;
 }
-
 
 
 function restart() {
@@ -192,5 +205,4 @@ function restart() {
 
 // Renderizar la primera pregunta al cargar la página
 renderQuestion(currentQuestion);
-
 
