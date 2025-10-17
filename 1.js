@@ -183,7 +183,7 @@ function showResults() {
     <p><strong>Interpretación:</strong> ${interpretacion}</p>
     ${recomendacionesHTML}
     <p style="margin-top: 30px;">
-      Si así lo desearas, <strong><a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20mas%20información" target="_blank" style="color: #25D366; font-weight: bold;">presiona este texto</a></strong> para recibir información sobre nuestros servicios o agendar cita con alguno de nuestros especialistas en salud mental:<br>
+      Si así lo desearas, <strong><a href="https://wa.me/525636046040?text=Hola%2C%20quiero%20mas%20información" target="_blank" style="color: #25D366; font-weight: bold;">presiona este texto</a></strong> para recibir información sobre nuestros servicios o agendar cita con alguno de nuestros especialistas en salud mental.<br>
     </p>
     <button onclick="restart()">Reiniciar</button>
   `;
